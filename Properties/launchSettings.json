@@ -42,7 +42,7 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "api/Grupos",
-      "applicationUrl": "http://localhost:80;http://localhost:8080",
+      "applicationUrl": "http://localhost:80;http://localhost:8088",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
