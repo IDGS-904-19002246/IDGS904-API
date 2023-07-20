@@ -10,6 +10,8 @@ namespace IDGS904_API.Controllers
     public class ProductosController : ControllerBase
     {
         private readonly AppDbContext _context;
+        
+
         public ProductosController(AppDbContext context)
         {
             _context = context;
@@ -100,7 +102,7 @@ namespace IDGS904_API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { status = "no", msg = "Operacion rechazada :(" });
+                return BadRequest(new { status = "no", msg = "Operación rechazada :(" });
                 //return BadRequest(ex.Message);
             }
         }

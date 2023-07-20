@@ -1,0 +1,13 @@
+administrar = añadir, editar, eliminar, colsultar
+.......................................................................
+-usuarios
+
+-productos
+-insumos
+-proveedores
+
+-ventas
+-compras
+
+-insumos x productos
+-envios

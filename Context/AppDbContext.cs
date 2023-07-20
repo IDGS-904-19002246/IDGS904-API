@@ -9,7 +9,7 @@ namespace IDGS904_API.Context
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : 
             base(options) { } 
-        public DbSet<Alumnos>Alumnos { get; set; }
+        //public DbSet<Alumnos>Alumnos { get; set; }
         public DbSet<Productos>tbl_productos { get; set; }
     }
 }

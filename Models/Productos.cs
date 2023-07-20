@@ -17,8 +17,6 @@ namespace IDGS904_API.Models
         public string? estado { get; set; }
         public int pendientes { get; set; }
 
-
-
         //       [id_productos] INT IDENTITY(1,1),
         //   [nombre] VARCHAR(32)  NOT NULL,
         //   [precio]       INT NOT NULL,
