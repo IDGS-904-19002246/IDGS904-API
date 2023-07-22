@@ -2,17 +2,26 @@
 using IDGS904_API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+//TABLAS
+//insumo-producto
+//insumo-proveedor
+//insumos
+//productos
+//proveedores
+//usuarios
+//venta-Productos
+//venta
 
 namespace IDGS904_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductosController : ControllerBase
+    public class productosController : ControllerBase
     {
         private readonly AppDbContext _context;
         
 
-        public ProductosController(AppDbContext context)
+        public productosController(AppDbContext context)
         {
             _context = context;
         }
@@ -21,7 +30,9 @@ namespace IDGS904_API.Controllers
         {
             try
             {
-                return Ok(_context.tbl_productos.ToList());
+                //var productos = (from p in _context.tbl_productos select p).Skip(15).Take(16).ToList();
+                return Ok((from p in _context.tbl_productos select p).Take(4).ToList());
+                //return Ok(_context.tbl_productos.ToList());
             }
             catch (Exception ex)
             {
@@ -29,13 +40,17 @@ namespace IDGS904_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("{id}", Name = "tbl_productos")]
-        public ActionResult Get(int id)
+        [HttpGet("{rango}", Name = "productos")]
+        public ActionResult Get(int rango)
         {
             try
             {
-                var alum = _context.tbl_productos.FirstOrDefault(x => x.id_producto == id);
-                return Ok(alum);
+                if (rango == 1 || rango <= 0) {
+                    return Get();
+                }
+                int inicio = (rango-1) * 4;
+                var productos = (from p in _context.tbl_productos select p).Skip(inicio).Take(4).ToList();
+                return Ok(productos);
             }
             catch (Exception ex)
             {
@@ -43,6 +58,21 @@ namespace IDGS904_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        //[HttpGet("{id}", Name = "productos")]
+        //public ActionResult Get(int id)
+        //{
+        //    try
+        //    {
+        //        var alum = _context.tbl_productos.FirstOrDefault(x => x.id_producto == id);
+        //        return Ok(alum);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
+
         [HttpPost]
         public ActionResult<Productos> Post([FromBody] Productos P)
         {
@@ -91,7 +121,8 @@ namespace IDGS904_API.Controllers
                 var P = _context.tbl_productos.FirstOrDefault(x => x.id_producto == id);
                 if (P != null)
                 {
-                    _context.Remove(P);
+                    P.estado = "descontinuado";
+                    //_context.Remove(P);
                     _context.SaveChanges();
                     return Ok(new { status = "ok", msg = "Todo bien :)" });
                 }

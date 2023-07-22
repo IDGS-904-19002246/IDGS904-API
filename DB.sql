@@ -84,7 +84,13 @@ CREATE TABLE IF NOT EXISTS "tbl_productos" (
 /*!40000 ALTER TABLE "tbl_productos" DISABLE KEYS */;
 INSERT INTO "tbl_productos" ("id_producto", "nombre", "precio", "cantidad", "cantidad_min", "img", "descripcion", "estado", "pendientes") VALUES
 	(1, 'modificado con put :)', 3, 3, 3, 'd', 'd', 'ok', 2),
-	(2, 'modificado con put :)', 3, 3, 3, 'd', 'd', 'ok', 2);
+	(2, 'modificado con put :)', 3, 3, 3, 'd', 'd', 'ok', 2),
+	(1002, 'modificado con put :)', 3, 3, 3, 'd', 'd', 'ok', 2),
+	(1003, 'modificado con put :)', 3, 3, 3, 'd', 'd', 'ok', 2),
+	(1004, 'modificado con put :)', 3, 3, 3, 'd', 'd', 'ok', 2),
+	(1005, 'modificado con put :)', 3, 3, 3, 'd', 'd', 'ok', 2),
+	(1006, 'modificado con put :)', 3, 3, 3, 'd', 'd', 'ok', 2),
+	(1007, 'modificado con put :)', 3, 3, 3, 'd', 'd', 'ok', 2);
 /*!40000 ALTER TABLE "tbl_productos" ENABLE KEYS */;
 
 -- Volcando estructura para tabla IDGS904_API.tbl_proveedores
