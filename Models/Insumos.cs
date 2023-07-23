@@ -11,6 +11,7 @@ namespace IDGS904_API.Models
         public string nombre { get; set; }
         public int cantidad { get; set; }
         public int cantidad_min { get; set; }
+        public string status{ get; set; }
 
 
         //CREATE TABLE[dbo].[tbl_insumos](

@@ -31,6 +31,16 @@ namespace IDGS904_API.Controllers
             try
             {
                 //var productos = (from p in _context.tbl_productos select p).Skip(15).Take(16).ToList();
+
+                //from t1 in _context.tbl_ventas
+//             join t2 in _context.tbl_usuarios on t1.fk_id_usuario equals t2.id_usuario
+//             where t2.id_usuario == id
+//             select new
+//             {
+//                 venta = t1.id_venta,
+//                 nombre = t2.nombre,
+//                 fecha = t1.fecha_compra
+//             };
                 return Ok((from p in _context.tbl_productos select p).Take(4).ToList());
                 //return Ok(_context.tbl_productos.ToList());
             }

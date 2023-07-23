@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "PoUVxLGXSZ3TZfOSM64zhS8wVDAnWX1IkSVpRezu8bDi0YS9uWncpLSWCeXT+X3+a99nmn+LBQzzpJfB2zZc9A==",
+  "dgSpecHash": "ocXT/+ImbUgRiiVJsCEXAujUn21qQz9dSppfGX3y7eEubxYSRB21JB7lQKOFhQRq8hvONQr6RQmJcDtZmiAjTQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\hp i5 stat wars\\Desktop\\KUARENTENA\\IDGS904\\IDGS904_API\\IDGS904_API.csproj",
   "expectedPackageFiles": [
@@ -44,6 +44,7 @@
     "C:\\Users\\hp i5 stat wars\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
     "C:\\Users\\hp i5 stat wars\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
     "C:\\Users\\hp i5 stat wars\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\hp i5 stat wars\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\hp i5 stat wars\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\hp i5 stat wars\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\hp i5 stat wars\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",

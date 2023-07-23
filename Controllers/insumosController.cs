@@ -21,12 +21,9 @@ namespace IDGS904_API.Controllers
     public class insumosController : ControllerBase
     {
         private readonly AppDbContext _context;
-        
+        public insumosController(AppDbContext context){_context = context;}
+        //.......................................................................................
 
-        public insumosController(AppDbContext context)
-        {
-            _context = context;
-        }
         [HttpGet]//api/<Grupos>
         public ActionResult Get()
         {
@@ -107,15 +104,21 @@ namespace IDGS904_API.Controllers
                 var I = _context.tbl_insumos.FirstOrDefault(x => x.id_insumo == id);
                 if (I != null)
                 {
-                    _context.Remove(I);
+                    I.status = "Eliminado";
                     _context.SaveChanges();
                     return Ok(new { status = "ok", msg = "Todo bien :)" });
                 }
-                else{return BadRequest(new { status = "no", msg = "No se pudo eliminar :(" });}
+                else
+                {
+                    return BadRequest(new { status = "no", msg = "No se pudo eliminar :(" });
+                }
             }
-            catch (Exception ex){return BadRequest(new { status = "no", msg = "Operación rechazada :(" });}
+            catch (Exception ex)
+            {
+                return BadRequest(new { status = "no", msg = "Operación rechazada :(" });
+                //return BadRequest(ex.Message);
+            }
         }
-
 
 
     }

@@ -90,3 +90,4 @@ C:\Users\hp i5 stat wars\Desktop\KUARENTENA\IDGS904\IDGS904_API\obj\Debug\net6.0
 C:\Users\hp i5 stat wars\Desktop\KUARENTENA\IDGS904\IDGS904_API\obj\Debug\net6.0\IDGS904_API.pdb
 C:\Users\hp i5 stat wars\Desktop\KUARENTENA\IDGS904\IDGS904_API\obj\Debug\net6.0\IDGS904_API.genruntimeconfig.cache
 C:\Users\hp i5 stat wars\Desktop\KUARENTENA\IDGS904\IDGS904_API\obj\Debug\net6.0\ref\IDGS904_API.dll
+C:\Users\hp i5 stat wars\Desktop\KUARENTENA\IDGS904\IDGS904_API\bin\Debug\net6.0\Newtonsoft.Json.dll

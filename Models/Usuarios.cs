@@ -4,6 +4,11 @@ using System.Text.Json.Nodes;
 
 namespace IDGS904_API.Models
 {
+    public class LoginData
+    {
+        public string user { get; set; }
+        public string pass { get; set; }
+    }
     public class Usuarios
     {
         [Key]
@@ -14,7 +19,7 @@ namespace IDGS904_API.Models
 
         public string correo { get; set; }
         public string contrasena { get; set; }
-        public int rol { get; set; }
+        public string rol { get; set; }
 
 
 //    [id_usuario] INT IDENTITY(1, 1) NOT NULL,

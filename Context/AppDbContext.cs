@@ -22,10 +22,10 @@ namespace IDGS904_API.Context
         public DbSet<Insumos>tbl_insumos { get; set; }
         public DbSet<Usuarios>tbl_usuarios { get; set; }
         public DbSet<Ventas>tbl_ventas { get; set; }
+        public DbSet<Proveedores> tbl_proveedores { get; set; }
+
         //................................................................................
         public DbSet<venta_producto>tbl_venta_producto { get; set; }
-
-
-
+        
     }
 }

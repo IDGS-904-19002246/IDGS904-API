@@ -1,1 +1,0 @@
-fk_id_insumo,fk_id_producto,cantidad,precio
