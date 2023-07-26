@@ -78,14 +78,15 @@ namespace IDGS904_API.Controllers
                 var venta = from v in _context.tbl_ventas
                             join vp in _context.tbl_venta_producto on v.id_venta equals vp.fk_id_venta
                             join p in _context.tbl_productos on vp.fk_id_producto equals p.id_producto
-
+                            join u in _context.tbl_usuarios on v.fk_id_usuario equals u.id_usuario
                             where v.id_venta == id_venta
                             select new
                             {
+                                usuario=u.nombre,
                                 v.fecha_compra,
                                 v.status,
-                                vp.cantidad,
                                 p.nombre,
+                                vp.cantidad,
                                 vp.precio,
                                 p.descripcion
                             };
@@ -96,7 +97,7 @@ namespace IDGS904_API.Controllers
         }
 
         [HttpGet("{ano}/{mes}", Name = "ventasXmes")]
-        public ActionResult ventasXmes(int mes, int ano)
+            public ActionResult ventasXmes(int mes, int ano)
         {
             if (mes >= 13 || mes <= 0 || ano >= 2024)
             {
@@ -104,11 +105,21 @@ namespace IDGS904_API.Controllers
             }
             try
             {
-                var ventasXmes = from v in _context.tbl_ventas
-                                 where
-                                    v.fecha_compra.Year == ano &&
-                                    v.fecha_compra.Month == mes
-                                 select v;
+                var ventasXmes = from vp in _context.tbl_venta_producto
+                    join v in _context.tbl_ventas on vp.fk_id_venta equals v.id_venta
+                    join u in _context.tbl_usuarios on v.fk_id_usuario equals u.id_usuario
+                    join p in _context.tbl_productos on vp.fk_id_producto equals p.id_producto
+                    where
+                        v.fecha_compra.Year == ano &&
+                        v.fecha_compra.Month == mes
+                    select new {
+                        v.id_venta,
+                        usuario=u.nombre,
+                        v.fecha_compra,
+                        p.nombre,
+                        vp.cantidad,
+                        vp.precio
+                    };
                 return Ok(ventasXmes);
             }
             catch (Exception ex) { return BadRequest(ex.Message); }

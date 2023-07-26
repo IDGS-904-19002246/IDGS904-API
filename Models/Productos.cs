@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text.Json.Nodes;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+
 namespace IDGS904_API.Models
 {
     public class Productos
@@ -24,7 +25,15 @@ namespace IDGS904_API.Models
             set => imgJson = Newtonsoft.Json.JsonConvert.SerializeObject(value);
         }
         [Column("img")]
-        public string imgJson { get; set; }
+        public string? imgJson { get; set; }
+        [NotMapped]
+        public List<Foto>? fotos { get; set; }
+
+    }
+    public class Foto
+    {
+        public string nombreFoto { get; set; }
+        public byte[] file64Foto { get; set; }
     }
 
     public class insumo_producto

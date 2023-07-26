@@ -56,7 +56,6 @@ namespace IDGS904_API.Controllers
                                   insumo = i.nombre,
                                   cantidad = ip.cantidad,
                                   precio = ip.precio
-
                               };
                 return Ok(compras);
             }

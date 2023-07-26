@@ -30,13 +30,29 @@ namespace IDGS904_API.Controllers
             try{return Ok(_context.tbl_insumos.ToList());}
             catch (Exception ex){return BadRequest(ex.Message);}
         }
-        //[HttpGet("{id}", Name = "tbl_insumos")]
-        //public ActionResult Get(int id)
-        //{
-        //    try{return Ok(_context.tbl_insumos.FirstOrDefault(x => x.id_insumo == id));}
-        //    catch (Exception ex){return BadRequest(ex.Message);}
-        //}
-
+        [HttpGet("{ano}/{mes}", Name = "insumoUsados")]
+        public ActionResult insumoUsados(int mes, int ano)
+        {
+            if (mes >= 13 || mes <= 0 || ano >= 2024) { return Ok(new { status = "no", msg = "Error al consultar, la fecha no es correcta." }); }
+            try
+            {
+                var insumos_usados = from ip in _context.tbl_insumo_producto
+                    join p in _context.tbl_productos on ip.fk_id_producto equals p.id_producto
+                    join i in _context.tbl_insumos on ip.fk_id_insumo equals i.id_insumo
+                    where ip.fecha.Year == ano && ip.fecha.Month == mes
+                    select new {
+                        i.id_insumo,
+                        i.nombre,
+                        ip.fecha,
+                        producto = p.nombre,
+                        ip.cantidad,
+                        ip.precio
+                    };
+                return Ok(insumos_usados);
+            }
+            catch (Exception ex) { return BadRequest(ex.Message); }
+        }
+        //.......................................................................................
 
         [HttpPost("insertarInsumo")]
         public ActionResult insertarInsumo([FromBody] Insumos I)

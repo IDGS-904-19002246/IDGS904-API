@@ -2,6 +2,7 @@
 using IDGS904_API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 //TABLAS
 //insumo-producto
 //insumo-proveedor
@@ -19,7 +20,13 @@ namespace IDGS904_API.Controllers
     public class productosController : ControllerBase
     {
         private readonly AppDbContext _context;
-        public productosController(AppDbContext context){_context = context;}
+        private readonly IWebHostEnvironment _environment;
+
+        public productosController(AppDbContext context,IWebHostEnvironment environment)
+        {
+            _context = context;
+            _environment = environment;
+        }
 
         [HttpGet]
         public ActionResult Get()
@@ -64,33 +71,43 @@ namespace IDGS904_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("insumoProducto/{ano}/{mes}", Name = "insumoProducto")]
-        public ActionResult insumoProducto(int mes, int ano)
-        {
-            if (mes >= 13 || mes <= 0 || ano >= 2024) { return Ok(new { status = "no", msg = "Error al consultar, la fecha no es correcta." }); }
-            try
-            {
-                var insumos_usados = from ip in _context.tbl_insumo_producto
-                                     join p in _context.tbl_productos on ip.fk_id_insumo equals p.id_producto
-                                     where ip.fecha.Year == ano && ip.fecha.Month == mes
-                                     select ip;
-                return Ok(insumos_usados);
-            }
-            catch (Exception ex) { return BadRequest(ex.Message); }
-        }
-        
         //....................................................................................
 
         [HttpPost("crearProducto")]
-        public ActionResult<Productos> crearProducto([FromBody] Productos P)
+        public ActionResult crearProducto([FromBody] Productos P)
         {
             try
             {
-                _context.tbl_productos.Add(P);
-                _context.SaveChanges();
-                return Ok( new { status = "ok", msg = "Todo bien :)" });
+                if (P.fotos == null || P.fotos.Count() == 0)
+                {
+                    return Ok(new { status = "ok", msg = "El producto necesita mínimo una imagen :3" });
+                }
+                else
+                {
+                    string img = "[";
+                    int index = P.fotos.Count();
+                    foreach (Foto foto in P.fotos)
+                    {
+                        string nombre = P.nombre+" - "+ Guid.NewGuid().ToString().Substring(1, 4)+ ".jpg";
+                        img += "'"+nombre+"'"+(index != 1 ? ",":"");
+                        var rutaCompleta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Img", nombre);
+                        System.IO.File.WriteAllBytes(rutaCompleta, bytes: foto.file64Foto);
+                        index--;
+                    }
+                    img += "]";
+                    P.imgJson = img;
+                    _context.tbl_productos.Add(P);
+                    _context.SaveChanges();
+                    return Ok(new { status = "ok", msg = "Todo bien :]" });
+                }
             }
-            catch (Exception ex){return BadRequest(ex.Message);}
+            catch (Exception ex){
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine("Inner Exception: " + ex.InnerException.Message);
+                }
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("fabricarProducto")]
@@ -144,7 +161,31 @@ namespace IDGS904_API.Controllers
             {
                 if (P.id_producto == id)
                 {
-                    _context.Entry(P).State = EntityState.Modified;
+                    //var old_P = (from p in _context.tbl_productos where p.id_producto == id select p).Take(1);
+                    var old_data = _context.tbl_productos.Find(id);
+                    old_data.nombre = P.nombre;
+                    old_data.precio = P.precio;
+                    old_data.cantidad = P.cantidad;
+                    old_data.cantidad_min = P.cantidad_min;
+                    old_data.descripcion = P.descripcion;
+                    old_data.estado = P.estado;
+                    old_data.pendientes = P.pendientes;
+
+                    if (P.fotos.Count() != 0)
+                    {
+                        string img = "[";
+                        int index = P.fotos.Count();
+                        foreach (Foto foto in P.fotos)
+                        {
+                            string nombre = P.nombre + " - " + Guid.NewGuid().ToString().Substring(1, 4) + ".jpg";
+                            img += "'" + nombre + "'" + (index != 1 ? "," : "");
+                            var rutaCompleta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Img", nombre);
+                            System.IO.File.WriteAllBytes(rutaCompleta, bytes: foto.file64Foto);
+                            index--;
+                        }
+                        img += "]";
+                        old_data.imgJson = img;
+                    }
                     _context.SaveChanges();
                     return Ok(new { status = "ok", msg = "Todo bien :)" });
                 }
@@ -155,8 +196,8 @@ namespace IDGS904_API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(new { status = "no", msg = "Operacion rechazada :(" });
-                //return BadRequest(ex.Message);
+                //return BadRequest(new { status = "no", msg = "Operacion rechazada :(" });
+                return BadRequest(ex.Message);
             }
         }
         [HttpDelete("{id}")]
