@@ -1,8 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.InteropServices;
-using System.Text.Json.Nodes;
-using Newtonsoft.Json;
 namespace IDGS904_API.Models
 {
     public class Proveedores
@@ -12,34 +9,29 @@ namespace IDGS904_API.Models
         public string nombre { get; set; }
         public string correo { get; set; }
         public string telefono { get; set; }
-        
-        //[NotMapped] // Esta propiedad no se mapeará directamente a una columna de la base de datos.
-        //public List<string>? direccion
-        //{
-        //    get => Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(direccionJson);
-        //    set => direccionJson = Newtonsoft.Json.JsonConvert.SerializeObject(value);
-        //}
-
-        //[Column("direccion")]
-        //public string direccionJson { get; set; }
-        [NotMapped] // Esta propiedad no se mapeará directamente a una columna de la base de datos.
+        [NotMapped]
         public List<string>? direccion
         {
             get => Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(direccionJson);
             set => direccionJson = Newtonsoft.Json.JsonConvert.SerializeObject(value);
         }
-
-        [Column("direccion")] // Esta propiedad se mapeará a la columna "img" en la base de datos.
+        [Column("direccion")]
         public string direccionJson { get; set; }
-        //        CREATE TABLE[dbo].[tbl_proveedores]
-        //        (
-        //    [id_proveedor] INT            IDENTITY(1, 1) NOT NULL,
-        //    [nombre]       VARCHAR(32)   NOT NULL,
-        //    [correo]       VARCHAR(32)   NOT NULL,
-        //    [telefono]     VARCHAR(15)   NOT NULL,
-        //    [direccion]    NVARCHAR(MAX) NULL,
-        //    PRIMARY KEY CLUSTERED([id_proveedor] ASC)
-        //);
+    }
 
+    public class insumo_proveedor {
+        [Key]
+        public int? id_insumo_proveedor { get; set; }
+        public int fk_id_insumo { get; set; }
+        public int fk_id_proveedor { get; set; }
+        //.........................................
+        public int cantidad { get; set; }
+        public int precio { get; set; }
+        public DateTime fecha{ get; set; }
+    }
+
+    public class compra {
+        public int id { get; set; }
+        public List<insumo_proveedor> lista { get; set;}
     }
 }

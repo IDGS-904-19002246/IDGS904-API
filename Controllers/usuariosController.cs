@@ -5,9 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.OpenApi.Any;
 using System;
-using System.IO.Pipes;
-using static IDGS904_API.Controllers.LoginController;
-
+using System.IO.Pipes;  
 
 
 //TABLAS

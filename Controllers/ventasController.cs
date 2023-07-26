@@ -6,9 +6,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.OpenApi.Any;
 using System;
 using System.IO.Pipes;
-using static IDGS904_API.Controllers.LoginController;
-
-
 
 //TABLAS
 //insumo-producto
@@ -107,7 +104,6 @@ namespace IDGS904_API.Controllers
             }
             try
             {
-                DateTime fecha = new DateTime(ano,mes,1);
                 var ventasXmes = from v in _context.tbl_ventas
                                  where
                                     v.fecha_compra.Year == ano &&

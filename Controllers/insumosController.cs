@@ -104,7 +104,7 @@ namespace IDGS904_API.Controllers
                 var I = _context.tbl_insumos.FirstOrDefault(x => x.id_insumo == id);
                 if (I != null)
                 {
-                    I.status = "Eliminado";
+                    I.estado = "Eliminado";
                     _context.SaveChanges();
                     return Ok(new { status = "ok", msg = "Todo bien :)" });
                 }

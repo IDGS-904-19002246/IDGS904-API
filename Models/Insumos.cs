@@ -7,11 +7,11 @@ namespace IDGS904_API.Models
     public class Insumos
     {
         [Key]
-        public int id_insumo { get; set; }
-        public string nombre { get; set; }
+        public int? id_insumo { get; set; }
+        public string? nombre { get; set; }
         public int cantidad { get; set; }
         public int cantidad_min { get; set; }
-        public string status{ get; set; }
+        public string? estado { get; set; }
 
 
         //CREATE TABLE[dbo].[tbl_insumos](

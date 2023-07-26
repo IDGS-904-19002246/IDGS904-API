@@ -26,6 +26,10 @@ namespace IDGS904_API.Context
 
         //................................................................................
         public DbSet<venta_producto>tbl_venta_producto { get; set; }
+        public DbSet<insumo_proveedor> tbl_insumo_proveedor { get; set; }
+        public DbSet<insumo_producto> tbl_insumo_producto { get; set; }
+
         
+
     }
 }
