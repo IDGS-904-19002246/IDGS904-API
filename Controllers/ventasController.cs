@@ -7,16 +7,6 @@ using Microsoft.OpenApi.Any;
 using System;
 using System.IO.Pipes;
 
-//TABLAS
-//insumo-producto
-//insumo-proveedor
-//insumos
-//productos
-//proveedores
-//usuarios
-//venta-Productos
-//venta
-
 //var result = dbContext.tabla1
 //    .Join(
 //        dbContext.tabla2,
@@ -50,10 +40,8 @@ namespace IDGS904_API.Controllers
         }
 
 
-        public ventasController(AppDbContext context)
-        {
-            _context = context;
-        }
+        public ventasController(AppDbContext context){_context = context;}
+
         [HttpGet]//api/<Grupos>
         public ActionResult index()
         {
@@ -65,8 +53,43 @@ namespace IDGS904_API.Controllers
         {
             try
             {
-                var ventasXusuario = from v in _context.tbl_ventas where v.fk_id_usuario == id select v;
-                return Ok(ventasXusuario);
+                var ventasXusuario = from v in _context.tbl_ventas
+                                     join vp in _context.tbl_venta_producto on v.id_venta equals vp.fk_id_venta
+                                     join p in _context.tbl_productos on vp.fk_id_producto equals p.id_producto
+                                     join u in _context.tbl_usuarios on v.fk_id_usuario equals u.id_usuario
+                                     where u.id_usuario == id
+                                     select new
+                                     {
+
+                                         u_nombre = u.nombre,
+                                         v.fecha_compra,
+                                         v.status,
+
+                                         p.nombre,
+                                         vp.cantidad,
+                                         vp.precio,
+                                         p.descripcion
+                                     };
+                var listaNombres = ventasXusuario
+                    .GroupBy(v => new { v.fecha_compra, v.u_nombre, v.status })
+                    .Select(
+                    g => new venta_productos
+                    {
+                        fecha = g.Key.fecha_compra,
+                        u_nombre = g.Key.u_nombre,
+                        status = g.Key.status,
+
+                        lista = g.Select(r => new producto
+                        {
+                            p_nombre = r.nombre,
+                            cantidad = r.cantidad,
+                            precio = r.precio,
+                            descripcion = r.descripcion
+                        }).ToList()
+                    }).ToList();
+
+
+                return Ok(listaNombres);
             }
             catch (Exception ex){return BadRequest(ex.Message);}
         }
@@ -97,7 +120,7 @@ namespace IDGS904_API.Controllers
         }
 
         [HttpGet("{ano}/{mes}", Name = "ventasXmes")]
-            public ActionResult ventasXmes(int mes, int ano)
+        public ActionResult ventasXmes(int mes, int ano)
         {
             if (mes >= 13 || mes <= 0 || ano >= 2024)
             {

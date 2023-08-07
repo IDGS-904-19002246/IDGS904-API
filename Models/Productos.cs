@@ -28,6 +28,7 @@ namespace IDGS904_API.Models
         public string? imgJson { get; set; }
         [NotMapped]
         public List<Foto>? fotos { get; set; }
+        
 
     }
     public class Foto
@@ -44,13 +45,28 @@ namespace IDGS904_API.Models
         public int fk_id_producto { get; set; }
         //.........................................
         public int cantidad { get; set; }
-        public int precio { get; set; }
-        public DateTime fecha { get; set; }
+        //public int precio { get; set; }
+        //public DateTime fecha { get; set; }
     }
     public class insumo_productos {
         public int id { get; set; }
         public int cantidad { get; set; }
 
-        public List<insumo_producto> lista { get; set; }
+        public List<insumo_producto>? lista { get; set; }
+    }
+    public class perecedero
+    {
+        [Key]
+        public int? id_perecedero { get; set; }
+        public int fk_id_insumo { get; set; }
+        public int cantidad { get; set; }
+        public DateTime fecha { get; set; }
+
+    }
+    public class cocinar
+    {
+        public int id { get; set; }
+        public int cantidad { get; set; }
+
     }
 }

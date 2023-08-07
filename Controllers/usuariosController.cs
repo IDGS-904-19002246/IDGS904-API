@@ -34,11 +34,12 @@ namespace IDGS904_API.Controllers
             {
                 var U = from u in _context.tbl_usuarios where
                         u.correo == L.user &&
-                        u.contrasena == L.pass &&
-                        u.rol != "baned" && u.rol != "delet"
+                        u.contrasena == L.pass
+                        //&& u.rol != "baned"
+                        //&& u.rol != "delet"
                         select u;
                 if (U == null)
-                { return Ok(new { status = "no", msg = "El correo no esta registrado o la contraseña es incorrecta :[" }); }
+                { return Ok(); }
                 else
                 { return Ok(U); }
             }

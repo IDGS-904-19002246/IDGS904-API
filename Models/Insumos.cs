@@ -12,16 +12,13 @@ namespace IDGS904_API.Models
         public int cantidad { get; set; }
         public int cantidad_min { get; set; }
         public string? estado { get; set; }
-
-
-        //CREATE TABLE[dbo].[tbl_insumos](
-        //    [id_insumo] INT          IDENTITY(1, 1) NOT NULL,
-        //    [nombre]       VARCHAR(32) NOT NULL,
-        //    [cantidad]     INT NOT NULL,
-        //    [cantidad_min] INT NOT NULL,
-        //    PRIMARY KEY CLUSTERED([id_insumo] ASC)
-        //);
-
-
+        public bool perecedero { get; set; }
     }
+    //public class surtitInsumo
+    //{
+    //    public int id_insumo { get; set; }
+    //    public int cantidad { get; set; }
+    //    public DateTime? fecha{ get; set; }
+    //    public int id_proveedor { get; set; }
+    //}
 }

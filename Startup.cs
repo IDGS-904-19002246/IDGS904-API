@@ -1,5 +1,6 @@
 ﻿using IDGS904_API.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace IDGS904_API
 {
@@ -23,8 +24,17 @@ namespace IDGS904_API
                 });
             });
             services.AddControllers();
+
             services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("conexion")));
+                options.UseSqlServer(Configuration.GetConnectionString("conexion"))
+            );
+            services.AddDbContext<AppDb2Context>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("conexionComun"))
+            );
+            //var connectionString = Configuration.GetConnectionString("conexionComun");
+
+            //// Registrar el contexto con la cadena de conexión
+            //services.AddDbContext<AppDb2Context>(options => options.UseSqlServer(connectionString));
             // ...
         }
 

@@ -39,14 +39,14 @@ namespace IDGS904_API.Controllers
                 var insumos_usados = from ip in _context.tbl_insumo_producto
                     join p in _context.tbl_productos on ip.fk_id_producto equals p.id_producto
                     join i in _context.tbl_insumos on ip.fk_id_insumo equals i.id_insumo
-                    where ip.fecha.Year == ano && ip.fecha.Month == mes
+                    /*where ip.fecha.Year == ano && ip.fecha.Month == mes*/
                     select new {
                         i.id_insumo,
                         i.nombre,
-                        ip.fecha,
+                        //ip.fecha,
                         producto = p.nombre,
                         ip.cantidad,
-                        ip.precio
+                        //ip.precio
                     };
                 return Ok(insumos_usados);
             }
@@ -65,6 +65,7 @@ namespace IDGS904_API.Controllers
             }
             catch (Exception ex){return Ok(new { status = "no", msg = "No se pudo añadir el insumo al inventario :[" });}
         }
+        
         [HttpPost("editarInsumo")]
         public ActionResult editarInsumo([FromBody] Insumos I)
         {

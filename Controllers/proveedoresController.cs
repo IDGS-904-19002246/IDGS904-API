@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.OpenApi.Any;
 using System;
 using System.IO.Pipes;
+using System.Runtime.ConstrainedExecution;
 
 
 
@@ -91,29 +92,42 @@ namespace IDGS904_API.Controllers
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
-        [HttpPost("compraProveedor")]
-        public ActionResult compraProveedor([FromBody] compra c)
+        [HttpPost("surtirInsumo")]
+        public ActionResult surtirInsumo([FromBody] compra c)
         {
-            try
-            {
+            try {
                 List<insumo_proveedor> lis = c.lista;
                 foreach (insumo_proveedor item in lis)
                 {
                     var I = _context.tbl_insumos.FirstOrDefault(x => x.id_insumo == item.fk_id_insumo);
-                    if (I != null){
-                        item.fk_id_proveedor = c.id;
-                        _context.tbl_insumo_proveedor.Add(item);
-
+                    item.fk_id_proveedor = c.id;
+                    _context.tbl_insumo_proveedor.Add(item);
+                    if (I != null)
+                    {
                         I.cantidad += item.cantidad;
                         _context.Entry(I).State = EntityState.Modified;
                         _context.SaveChanges();
+
+                        if (I.perecedero == true)
+                        {
+                            perecedero Per = new()
+                            {
+                                fk_id_insumo = item.fk_id_insumo,
+                                cantidad = item.cantidad,
+                                fecha = item.fecha
+                            };
+                            _context.tbl_perecedero.Add(Per);
+                            _context.SaveChanges();
+                        }
                     }
+
                 }
-                return Ok(new { status = "ok", msg = "Todo bien :)" });
+                return Ok(new { status = "ok", msg = "Todo bien :]" });
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
-
+        //....................................................................................
 
     }
+
 }

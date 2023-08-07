@@ -23,18 +23,31 @@ namespace IDGS904_API.Models
         public int fk_id_usuario { get; set; }
         public DateTime fecha_compra { get; set; }
         public string status { get; set; }
-        //public List<venta_producto>? productos { get; set; }
+        [NotMapped]
+        public List<string>? direccionJson
+        {
+            get => Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(direccion);
+            set => direccion = Newtonsoft.Json.JsonConvert.SerializeObject(value);
+        }
+        [Column("direccion")]
+        public string? direccion { get; set; }
+    }
 
+    //.......................................................................................
 
-        //  [id_venta] INT IDENTITY(1, 1) NOT NULL,
-        //  [fk_id_usuario] INT NOT NULL,
+    public class producto
+    {
+        public string? p_nombre { get; set; }
+        public int cantidad { get; set; }
+        public int precio { get; set; }
+        public string descripcion { get; set; }
+    }
+    public class venta_productos
+    {
+        public string u_nombre { get; set; }
+        public DateTime fecha { get; set; }
+        public string status { get; set; }
 
-        //[fecha_compra] DATE NOT NULL,
-        //[entrega] INT NOT NULL,
-
-        //PRIMARY KEY CLUSTERED([id_venta] ASC),
-        //FOREIGN KEY([fk_id_usuario]) REFERENCES[dbo].[tbl_usuarios] ([id_usuario])
-
-
+        public List<producto> lista { get; set; }
     }
 }
