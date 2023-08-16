@@ -32,12 +32,12 @@ namespace IDGS904_API.Controllers
         {
             try
             {
-                var U = from u in _context.tbl_usuarios where
+                var U = (from u in _context.tbl_usuarios where
                         u.correo == L.user &&
                         u.contrasena == L.pass
                         //&& u.rol != "baned"
                         //&& u.rol != "delet"
-                        select u;
+                        select u).FirstOrDefault();
                 if (U == null)
                 { return Ok(); }
                 else
@@ -54,9 +54,18 @@ namespace IDGS904_API.Controllers
         {
             try
             {
-                _context.tbl_usuarios.Add(U);
-                _context.SaveChanges();
-                return Ok(U);
+                var P = _context.tbl_usuarios.FirstOrDefault(x => x.id_usuario == U.id_usuario);
+                if ( P == null)
+                {
+                    _context.tbl_usuarios.Add(U);
+                    _context.SaveChanges();
+                    return Ok(U);
+                }
+                else{
+                    return Ok();
+                }
+
+                
             }
             catch (Exception ex) { return BadRequest(ex.Message); }
         }
